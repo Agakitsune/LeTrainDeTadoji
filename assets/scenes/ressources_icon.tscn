@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://qx8m377wkqc8"]
+
+[ext_resource type="Script" uid="uid://cphlgdhv41f03" path="res://assets/scripts/ressources_icon.gd" id="1_uip1n"]
+[ext_resource type="Texture2D" uid="uid://c8vcxsxrwhh3w" path="res://icon.svg" id="2_60b5g"]
+
+[node name="RessourcesIcon" type="Control" unique_id=1024190331]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uip1n")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1284709565]
+position = Vector2(0, -0.99999976)
+texture = ExtResource("2_60b5g")
+
+[node name="Label" type="Label" parent="." unique_id=564111067]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.014756944
+anchor_top = 0.012345682
+anchor_right = 0.017361112
+anchor_bottom = 0.041666668
+offset_left = 15.999999
+offset_top = 15.999998
+offset_right = 56.0
+offset_bottom = 39.0
+theme_override_font_sizes/font_size = 30
+text = "74"
+metadata/_edit_use_anchors_ = true
