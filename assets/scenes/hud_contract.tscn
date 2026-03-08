@@ -18,4 +18,5 @@ offset_top = 38.0
 offset_right = 1042.0
 offset_bottom = 221.0
 mouse_behavior_recursive = 1
+theme_override_constants/separation = 200
 alignment = 1

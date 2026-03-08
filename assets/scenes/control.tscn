@@ -208,6 +208,7 @@ offset_left = 36.5
 offset_top = 82.0
 offset_right = 178.0
 offset_bottom = 317.625
+theme_override_constants/separation = 30
 
 [node name="Panel" type="Panel" parent="Panel" unique_id=1458657863]
 visible = false
