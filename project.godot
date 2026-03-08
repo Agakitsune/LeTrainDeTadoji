@@ -11,8 +11,28 @@ config_version=5
 [application]
 
 config/name="TraindeTadoji"
+run/main_scene="uid://blnoaph5pjs1s"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Graph="*uid://csm4u2iyykokl"
+
+[debug_draw_3d]
+
+settings/addon_root_folder="res://addons/debug_draw_3d"
+
+[file_customization]
+
+folder_colors={
+"res://assets/models/": "yellow",
+"res://assets/models/meshes/": "orange",
+"res://assets/scenes/": "red",
+"res://assets/scripts/": "teal",
+"res://assets/scripts/nodes/": "green",
+"res://assets/scripts/train/": "blue"
+}
 
 [physics]
 
