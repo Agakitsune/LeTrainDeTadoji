@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 	if time_left < 0:
 		time_left_label.text = "-" + str(int(abs(time_left) / 60)) + ":" + ("%02d" % int(abs(time_left)) % 60)
 	else:
-		time_left_label.text = str(int(time_left / 60)) + ":" + ("%02d" % int(time_left) % 60)
+		time_left_label.text = str(int(time_left / 60)) + ":" + str("%02d" % int(time_left) % 60)
 
 func setup(contract):
 	time_left = contract.get_time()

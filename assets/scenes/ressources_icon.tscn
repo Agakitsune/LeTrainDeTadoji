@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://cphlgdhv41f03" path="res://assets/scripts/ressources_icon.gd" id="1_uip1n"]
 [ext_resource type="Texture2D" uid="uid://c8vcxsxrwhh3w" path="res://icon.svg" id="2_60b5g"]
 
+[sub_resource type="Theme" id="Theme_60b5g"]
+Label/colors/font_color = Color(1, 1, 1, 1)
+
 [node name="RessourcesIcon" type="Control" unique_id=1024190331]
 layout_mode = 3
 anchors_preset = 15
@@ -27,6 +30,7 @@ offset_left = 15.999999
 offset_top = 15.999998
 offset_right = 56.0
 offset_bottom = 39.0
+theme = SubResource("Theme_60b5g")
 theme_override_font_sizes/font_size = 30
 text = "74"
 metadata/_edit_use_anchors_ = true

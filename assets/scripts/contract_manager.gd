@@ -12,7 +12,7 @@ extends Node
 const RESSOURCES_ICON = preload("res://assets/scenes/ressources_icon.tscn")
 const Contract = preload("res://assets/scripts/contract.gd")
 
-var resources_list = ["Charcoal", "Wood","Wheat", "Food"]
+var resources_list = ["Charcoal", "Wood", "Wheat", "Food"]
 var button_list = []
 var selected_contract_id = -1
 var contract_id = 1
