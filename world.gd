@@ -23,7 +23,9 @@ func _process(delta: float) -> void:
 	_render_section(train_wagon._section)
 	
 	match train_wagon._next_track.size():
-		1: _render_section(train_wagon._next_track[0])
+		1:
+			_render_section(train_wagon._next_track[0])
+			t =0
 		2:
 			_render_section(train_wagon._next_track[t])
 	
