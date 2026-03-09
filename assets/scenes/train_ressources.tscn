@@ -2,8 +2,11 @@
 
 [ext_resource type="Script" uid="uid://bog1ruiqq28i6" path="res://assets/scripts/train_ressources.gd" id="1_aovjt"]
 [ext_resource type="StyleBox" uid="uid://crl7vd878rum5" path="res://assets/themes/new_style_box_flat.tres" id="1_kjefy"]
-[ext_resource type="Texture2D" uid="uid://c8vcxsxrwhh3w" path="res://icon.svg" id="2_rbmm1"]
 [ext_resource type="PackedScene" uid="uid://dyoqjqao6cwp7" path="res://assets/scenes/incrementor.tscn" id="3_rbmm1"]
+[ext_resource type="Texture2D" uid="uid://b0drvjsfwh3m2" path="res://assets/textures/Coal.png" id="3_vquue"]
+[ext_resource type="Texture2D" uid="uid://dpmcqm67bbrag" path="res://assets/textures/rocks.png" id="4_bv36y"]
+[ext_resource type="Texture2D" uid="uid://cxtfpemw2vyjf" path="res://assets/textures/wheat.png" id="5_rfg5i"]
+[ext_resource type="Texture2D" uid="uid://dwtkbkd7l4f2n" path="res://assets/textures/wood.png" id="6_pokla"]
 
 [node name="TrainRessources" type="Control" unique_id=243742770]
 layout_mode = 3
@@ -64,24 +67,24 @@ layout_mode = 1
 alignment = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="Panel/HBoxContainer" unique_id=1599245499]
-position = Vector2(156.5, 239.75)
-scale = Vector2(0.75, 0.7421877)
-texture = ExtResource("2_rbmm1")
+position = Vector2(157.50002, 238.75)
+scale = Vector2(0.4550001, 0.46109366)
+texture = ExtResource("3_vquue")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Panel/HBoxContainer" unique_id=582840676]
-position = Vector2(292.5, 239.75)
-scale = Vector2(0.75, 0.7421877)
-texture = ExtResource("2_rbmm1")
+position = Vector2(293.50003, 245.74998)
+scale = Vector2(0.61500007, 0.6360938)
+texture = ExtResource("4_bv36y")
 
 [node name="Sprite2D3" type="Sprite2D" parent="Panel/HBoxContainer" unique_id=185510658]
-position = Vector2(459.5, 241.25)
-scale = Vector2(0.75, 0.7421877)
-texture = ExtResource("2_rbmm1")
+position = Vector2(468.5, 232.74998)
+scale = Vector2(0.47499985, 0.47429684)
+texture = ExtResource("5_rfg5i")
 
 [node name="Sprite2D4" type="Sprite2D" parent="Panel/HBoxContainer" unique_id=891179247]
-position = Vector2(600.5, 241.25)
-scale = Vector2(0.75, 0.7421877)
-texture = ExtResource("2_rbmm1")
+position = Vector2(604.50006, 240.75)
+scale = Vector2(0.525, 0.5503391)
+texture = ExtResource("6_pokla")
 
 [node name="Incrementor" parent="." unique_id=1039205971 instance=ExtResource("3_rbmm1")]
 layout_mode = 1
