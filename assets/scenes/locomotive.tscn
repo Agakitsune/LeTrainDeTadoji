@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://beccy6mjldaql"]
+
+[ext_resource type="Script" uid="uid://ds0o05ujkrill" path="res://assets/scripts/wagon.gd" id="1_q1yqi"]
+[ext_resource type="PackedScene" uid="uid://dxv5ih7o4q22f" path="res://assets/scenes/bogey.tscn" id="2_fye07"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6fu54"]
+size = Vector2(0.2, 0.8)
+
+[node name="Locomotive" type="Node3D" unique_id=2017984882 node_paths=PackedStringArray("bogeys", "mesh")]
+script = ExtResource("1_q1yqi")
+bogeys = [NodePath("Bogey"), NodePath("Bogey2")]
+mesh = NodePath("MeshInstance3D")
+length = 0.8
+
+[node name="Bogey" parent="." unique_id=1053342352 instance=ExtResource("2_fye07")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.4)
+
+[node name="Bogey2" parent="." unique_id=584670786 instance=ExtResource("2_fye07")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.2)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1358669693]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05295825, -0.09513965)
+mesh = SubResource("PlaneMesh_6fu54")

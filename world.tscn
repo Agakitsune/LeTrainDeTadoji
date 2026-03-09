@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c4on3wci5whds" path="res://world.gd" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://b0dw035xv0lvc" path="res://assets/scripts/train/track_path.gd" id="2_fj7yv"]
-[ext_resource type="Script" uid="uid://diqpcwrlohjqb" path="res://assets/scripts/train/train.gd" id="4_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://cggkwi1vylao8" path="res://assets/scenes/player.tscn" id="4_aqk2v"]
 [ext_resource type="Script" uid="uid://bkx45ocdr0tqd" path="res://assets/scripts/nodes/track_stop.gd" id="5_036b0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f3sb7"]
@@ -90,9 +90,6 @@ _data = {
 point_count = 2
 up_vector_enabled = false
 
-[sub_resource type="PrismMesh" id="PrismMesh_036b0"]
-size = Vector3(0.2, 0.2, 0.05)
-
 [node name="World" type="Node3D" unique_id=1228652752]
 script = ExtResource("1_f3sb7")
 
@@ -162,13 +159,4 @@ script = ExtResource("5_036b0")
 stop_name = "Mak"
 metadata/_custom_type_script = "uid://bkx45ocdr0tqd"
 
-[node name="TrainWagon" type="Marker3D" parent="." unique_id=1460175675]
-script = ExtResource("4_aqk2v")
-metadata/_custom_type_script = "uid://diqpcwrlohjqb"
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="TrainWagon" unique_id=1861976557]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
-mesh = SubResource("PrismMesh_036b0")
-
-[node name="Camera3D" type="Camera3D" parent="TrainWagon/MeshInstance3D" unique_id=2074514993]
-transform = Transform3D(1, 0, 0, 0, 0.26612815, -0.96393764, 0, 0.96393764, 0.26612815, 0.27039504, -0.8676937, 1.0201805)
+[node name="Player" parent="." unique_id=1635979602 instance=ExtResource("4_aqk2v")]

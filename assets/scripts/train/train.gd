@@ -1,107 +1,258 @@
 extends Marker3D
-class_name TrainWagon
+class_name TrainBogey
+
+var _offset := 0.0
+var _front := false # From start to end
 
 var _section: TrackSection
-var _offset := 0.0
-var _reverse := false # From end to start
+var _next_section: Array[TrackSection]
+var _previous_section: Array[TrackSection]
 
-var _next_track: Array[TrackSection]
+signal section_changed
 
-func spawn(s: TrackSection, on_end: bool, reversed: bool):
+class AdvanceResult:
+	var success := true
+	var section_changed := false
+	var travel: float
+	var remainder: float
+
+func _ready() -> void:
+	pass
+	#add_child(scene.instantiate())
+
+
+func spawn(s: TrackSection, front: bool, off: float = 0.0):
 	_section = s
-	if on_end:
-		_offset = s.curve.get_baked_length()
+	
+	if front:
+		_offset = off
 	else:
-		_offset = 0.0
-	_reverse = reversed
+		_offset = s.curve.get_baked_length() - off
+	_front = front
+	
+	if _front:
+		if _offset < 0.0:
+			_offset = s.end.connections[0].curve.get_baked_length() + _offset
+			spawn(s.end.connections[0], _offset)
+			return
+	else:
+		if _offset > s.curve.get_baked_length():
+			_offset -= s.curve.get_baked_length()
+			spawn(s.end.connections[0], _offset)
+			return
+	
+	_section_changed()
 	
 	global_transform.origin = _section.curve.sample_baked_with_rotation(_offset).origin
 	global_transform.basis = (
 		_section.curve.sample_baked_with_rotation(_offset).basis * Basis.looking_at(Vector3.MODEL_FRONT)
-		if _reverse
+		if _front
 		else
 		_section.curve.sample_baked_with_rotation(_offset).basis
 	)
-	
-	if _reverse:
-		_next_track = _section.start.connections.filter(
-			func (a): return a != _section
-		).filter(
-			func (a):
-				var forward := _section.curve.sample_baked_with_rotation(0.0).basis.z
-				var next_forward: Vector3
-				print(forward)
-				print(a.start, _section.start)
-				if a.start == _section.start:
-					next_forward = a.start.pos.direction_to(a.end.pos)
-				else:
-					print("a")
-					next_forward = a.end.pos.direction_to(a.start.pos)
-				print(next_forward)
-				return forward.dot(next_forward) > 0.0
-		) as Array[TrackSection]
-	else:
-		_next_track = _section.end.connections.filter(
-			func (a): return a != _section
-		).filter(
-			func (a):
-				var forward := -_section.curve.sample_baked_with_rotation(_section.curve.get_baked_length()).basis.z
-				var next_forward: Vector3
-				if a.start == _section.end:
-					next_forward = a.start.pos.direction_to(a.end.pos)
-				else:
-					next_forward = a.end.pos.direction_to(a.start.pos)
-				return forward.dot(next_forward) > 0.0
-		) as Array[TrackSection]
-	
-	_order()
 
 
-func advance(x: float, track: int) -> bool:
-	if _reverse:
+func advance(x: float, track: int) -> AdvanceResult:
+	var _reversing := x < 0.0
+	var res := AdvanceResult.new()
+	
+	if _front:
 		_offset -= x
 		if 0.0 > _offset:
-			if _next_track.is_empty():
-				return false # Stop the train
+			if _next_section.is_empty():
+				res.remainder = absf(_offset)
+				res.travel = absf(x) - res.remainder
+				res.success = false
+				_offset = 0.0
+				return res # Stop the train
 			else:
-				var next := _next_track[track]
-				_reverse = next.end == _section.start
-				if _reverse:
+				var next := _next_section[track]
+				_front = next.end == _section.start
+				if _front:
 					_offset += next.curve.get_baked_length() # Go to the 'end' of the curve
 				else:
 					_offset *= -1.0 # Just flip the offset
 				_section = next # Go next wooooo
-		
-		_next_track = _section.start.connections.filter(
-			func (a): return a != _section
-		).filter(
-			func (a):
-				var forward := _section.curve.sample_baked_with_rotation(0.0).basis.z
-				var next_forward: Vector3
-				if a.start == _section.start:
-					next_forward = a.start.pos.direction_to(a.end.pos)
+				_section_changed()
+				section_changed.emit()
+				res.section_changed = true
+		elif _section.curve.get_baked_length() < _offset:
+			if _previous_section.is_empty():
+				res.remainder = _offset - _section.curve.get_baked_length()
+				res.travel = x - res.remainder
+				res.success = false
+				_offset = _section.curve.get_baked_length()
+				return res # Stop the train
+			else:
+				var next := _previous_section[track]
+				_front = next.start != _section.end
+				if _front:
+					_offset -= _section.curve.get_baked_length()
+					_offset = next.curve.get_baked_length() - _offset # Go to the 'end' of the curve
 				else:
-					next_forward = a.end.pos.direction_to(a.start.pos)
-				return forward.dot(next_forward) > 0.0
-		) as Array[TrackSection]
-		
-		_order()
+					_offset -= _section.curve.get_baked_length() # Go to the 'begin' of the curve
+				_front = (not _front) if _reversing else _front
+				_section = next # Go next wooooo
+				_section_changed()
+				section_changed.emit()
+				res.section_changed = true
 	else:
 		_offset += x
 		if _section.curve.get_baked_length() < _offset:
-			if _next_track.is_empty():
-				return false # Stop the train
+			if _next_section.is_empty():
+				res.remainder = _offset - _section.curve.get_baked_length()
+				res.travel = x - res.remainder
+				res.success = false
+				_offset = _section.curve.get_baked_length()
+				return res # Stop the train
 			else:
-				var next := _next_track[track]
-				_reverse = next.start != _section.end
-				if _reverse:
+				var next := _next_section[track]
+				_front = next.start != _section.end
+				if _front:
 					_offset -= _section.curve.get_baked_length()
 					_offset = next.curve.get_baked_length() - _offset # Go to the 'end' of the curve
 				else:
 					_offset -= _section.curve.get_baked_length() # Go to the 'begin' of the curve
 				_section = next # Go next wooooo
+				_section_changed()
+				section_changed.emit()
+				res.section_changed = true
+		elif 0.0 > _offset:
+			if _previous_section.is_empty():
+				res.remainder = absf(_offset)
+				res.travel = absf(x) - res.remainder
+				res.success = false
+				_offset = 0.0
+				return res # Stop the train
+			else:
+				var next := _previous_section[track]
+				_front = next.end == _section.start
+				if _front:
+					_offset += next.curve.get_baked_length() # Go to the 'end' of the curve
+				else:
+					_offset *= -1.0 # Just flip the offset
+				_front = (not _front) if _reversing else _front
+				_section = next # Go next wooooo
+				_section_changed()
+				section_changed.emit()
+				res.section_changed = true
+	
+	global_transform.origin = _section.curve.sample_baked_with_rotation(_offset).origin
+	global_transform.basis = (
+		_section.curve.sample_baked_with_rotation(_offset).basis * Basis.looking_at(Vector3.MODEL_FRONT)
+		if _front
+		else
+		_section.curve.sample_baked_with_rotation(_offset).basis
+	)
+	
+	res.travel = x
+	res.remainder = 0.0
+	res.success = true
+	return res # Advance success
+
+
+func _section_changed():
+	_pick_next_section()
+	_pick_previous_section()
+	
+	_order_next()
+	_order_previous()
+
+
+func _order_next():
+	var forward: Vector3
+	var a: Vector3
+	var b: Vector3
+	
+	if _next_section.size() != 2:
+		return
+	
+	if _front:
+		forward = _section.curve.sample_baked_with_rotation(0.0).basis.z
 		
-		_next_track = _section.end.connections.filter(
+		if _section.start == _next_section[0].start:
+			a = _next_section[0].start.pos.direction_to(_next_section[0].end.pos)
+		else:
+			a = _next_section[0].end.pos.direction_to(_next_section[0].start.pos)
+		
+		if _section.start == _next_section[1].start:
+			b = _next_section[1].start.pos.direction_to(_next_section[1].end.pos)
+		else:
+			b = _next_section[1].end.pos.direction_to(_next_section[1].start.pos)
+	else:
+		forward = -_section.curve.sample_baked_with_rotation(_section.curve.get_baked_length()).basis.z
+		
+		if _section.end == _next_section[0].start:
+			a = _next_section[0].start.pos.direction_to(_next_section[0].end.pos)
+		else:
+			a = _next_section[0].end.pos.direction_to(_next_section[0].start.pos)
+		
+		if _section.end == _next_section[1].start:
+			b = _next_section[1].start.pos.direction_to(_next_section[1].end.pos)
+		else:
+			b = _next_section[1].end.pos.direction_to(_next_section[1].start.pos)
+		
+	var tmp = _next_section.duplicate()
+	if forward.cross(a).y < forward.cross(b).y:
+		_next_section[1] = tmp[0]
+		_next_section[0] = tmp[1]
+
+
+func _order_previous():
+	var forward: Vector3
+	var a: Vector3
+	var b: Vector3
+	
+	if _previous_section.size() != 2:
+		return
+	
+	if _front:
+		forward = -_section.curve.sample_baked_with_rotation(0.0).basis.z
+		
+		if _section.end == _previous_section[0].start:
+			a = _previous_section[0].start.pos.direction_to(_previous_section[0].end.pos)
+		else:
+			a = _previous_section[0].end.pos.direction_to(_previous_section[0].start.pos)
+		
+		if _section.end == _previous_section[1].start:
+			b = _previous_section[1].start.pos.direction_to(_previous_section[1].end.pos)
+		else:
+			b = _previous_section[1].end.pos.direction_to(_previous_section[1].start.pos)
+	else:
+		forward = _section.curve.sample_baked_with_rotation(_section.curve.get_baked_length()).basis.z
+		
+		if _section.start == _previous_section[0].start:
+			a = _previous_section[0].start.pos.direction_to(_previous_section[0].end.pos)
+		else:
+			a = _previous_section[0].end.pos.direction_to(_previous_section[0].start.pos)
+		
+		if _section.start == _previous_section[1].start:
+			b = _previous_section[1].start.pos.direction_to(_previous_section[1].end.pos)
+		else:
+			b = _previous_section[1].end.pos.direction_to(_previous_section[1].start.pos)
+	
+	var tmp = _previous_section.duplicate()
+	if forward.cross(a).y < forward.cross(b).y:
+		_previous_section[1] = tmp[0]
+		_previous_section[0] = tmp[1]
+
+
+func _pick_next_section():
+	if _front:
+		_next_section = _section.start.connections.filter(
+			func (a): return a != _section
+		).filter(
+			func (a):
+				var forward := _section.curve.sample_baked_with_rotation(0.0).basis.z
+				var next_forward: Vector3
+				if a.start == _section.start:
+					next_forward = a.start.pos.direction_to(a.end.pos)
+				else:
+					next_forward = a.end.pos.direction_to(a.start.pos)
+				return forward.dot(next_forward) > 0.0
+		) as Array[TrackSection]
+	else:
+		_next_section = _section.end.connections.filter(
 			func (a): return a != _section
 		).filter(
 			func (a):
@@ -113,54 +264,32 @@ func advance(x: float, track: int) -> bool:
 					next_forward = a.end.pos.direction_to(a.start.pos)
 				return forward.dot(next_forward) > 0.0
 		) as Array[TrackSection]
-		
-		_order()
-	
-	global_transform.origin = _section.curve.sample_baked_with_rotation(_offset).origin
-	global_transform.basis = (
-		_section.curve.sample_baked_with_rotation(_offset).basis * Basis.looking_at(Vector3.MODEL_FRONT)
-		if _reverse
-		else
-		_section.curve.sample_baked_with_rotation(_offset).basis
-	)
-	
-	return true # Advance success
 
 
-func _order():
-	var forward: Vector3
-	var a: Vector3
-	var b: Vector3
-	
-	if _next_track.size() != 2:
-		return
-	
-	if _reverse:
-		forward = _section.curve.sample_baked_with_rotation(0.0).basis.z
-		
-		if _section.start == _next_track[0].start:
-			a = _next_track[0].start.pos.direction_to(_next_track[0].end.pos)
-		else:
-			a = _next_track[0].end.pos.direction_to(_next_track[0].start.pos)
-		
-		if _section.start == _next_track[1].start:
-			b = _next_track[1].start.pos.direction_to(_next_track[1].end.pos)
-		else:
-			b = _next_track[1].end.pos.direction_to(_next_track[1].start.pos)
+func _pick_previous_section():
+	if _front:
+		_previous_section = _section.end.connections.filter(
+			func (a): return a != _section
+		).filter(
+			func (a):
+				var forward := -_section.curve.sample_baked_with_rotation(_section.curve.get_baked_length()).basis.z
+				var next_forward: Vector3
+				if a.start == _section.end:
+					next_forward = a.start.pos.direction_to(a.end.pos)
+				else:
+					next_forward = a.end.pos.direction_to(a.start.pos)
+				return forward.dot(next_forward) > 0.0
+		) as Array[TrackSection]
 	else:
-		forward = -_section.curve.sample_baked_with_rotation(_section.curve.get_baked_length()).basis.z
-		
-		if _section.end == _next_track[0].start:
-			a = _next_track[0].start.pos.direction_to(_next_track[0].end.pos)
-		else:
-			a = _next_track[0].end.pos.direction_to(_next_track[0].start.pos)
-		
-		if _section.end == _next_track[1].start:
-			b = _next_track[1].start.pos.direction_to(_next_track[1].end.pos)
-		else:
-			b = _next_track[1].end.pos.direction_to(_next_track[1].start.pos)
-		
-	var tmp = _next_track.duplicate()
-	if forward.cross(a).y < forward.cross(b).y:
-		_next_track[1] = tmp[0]
-		_next_track[0] = tmp[1]
+		_previous_section = _section.start.connections.filter(
+			func (a): return a != _section
+		).filter(
+			func (a):
+				var forward := _section.curve.sample_baked_with_rotation(0.0).basis.z
+				var next_forward: Vector3
+				if a.start == _section.start:
+					next_forward = a.start.pos.direction_to(a.end.pos)
+				else:
+					next_forward = a.end.pos.direction_to(a.start.pos)
+				return forward.dot(next_forward) > 0.0
+		) as Array[TrackSection]
