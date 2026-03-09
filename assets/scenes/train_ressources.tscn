@@ -7,6 +7,44 @@
 [ext_resource type="Texture2D" uid="uid://dpmcqm67bbrag" path="res://assets/textures/rocks.png" id="4_bv36y"]
 [ext_resource type="Texture2D" uid="uid://cxtfpemw2vyjf" path="res://assets/textures/wheat.png" id="5_rfg5i"]
 [ext_resource type="Texture2D" uid="uid://dwtkbkd7l4f2n" path="res://assets/textures/wood.png" id="6_pokla"]
+[ext_resource type="Theme" uid="uid://bi6i6ndsmi6e1" path="res://assets/themes/new_theme.tres" id="7_bv36y"]
+[ext_resource type="Texture2D" uid="uid://tlus1td6u7dw" path="res://assets/textures/quit.png" id="9_rfg5i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pokla"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ccq78"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xb1n"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
 [node name="TrainRessources" type="Control" unique_id=243742770]
 layout_mode = 3
@@ -31,16 +69,6 @@ offset_bottom = 226.75
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("1_kjefy")
-
-[node name="Button" type="Button" parent="Panel" unique_id=1744923247]
-layout_mode = 0
-offset_left = 591.5
-offset_top = 377.75
-offset_right = 695.5
-offset_bottom = 419.75
-theme_override_colors/font_color = Color(0.045545578, 0.31796953, 0.32746062, 1)
-theme_override_styles/normal = ExtResource("1_kjefy")
-text = "Done"
 
 [node name="Label" type="Label" parent="Panel" unique_id=1919706126]
 layout_mode = 0
@@ -86,6 +114,15 @@ position = Vector2(604.50006, 240.75)
 scale = Vector2(0.525, 0.5503391)
 texture = ExtResource("6_pokla")
 
+[node name="Button" type="Button" parent="Panel" unique_id=188090912]
+layout_mode = 0
+offset_left = 597.5
+offset_top = 388.75
+offset_right = 702.0
+offset_bottom = 413.5
+theme = ExtResource("7_bv36y")
+text = "Done"
+
 [node name="Incrementor" parent="." unique_id=1039205971 instance=ExtResource("3_rbmm1")]
 layout_mode = 1
 offset_left = 309.0
@@ -117,3 +154,18 @@ offset_top = 370.00003
 offset_right = -241.0
 offset_bottom = -186.99997
 scale = Vector2(0.7, 0.7)
+
+[node name="CloseButton" type="Button" parent="." unique_id=1662470959]
+layout_mode = 0
+offset_left = 909.0
+offset_top = 87.0
+offset_right = 1429.0
+offset_bottom = 607.0
+scale = Vector2(0.1, 0.1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_pokla")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ccq78")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0xb1n")
+icon = ExtResource("9_rfg5i")
+
+[connection signal="pressed" from="Panel/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

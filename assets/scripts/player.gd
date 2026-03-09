@@ -7,8 +7,9 @@ class_name Player
 @onready var pitch: Marker3D = %Pitch
 @onready var yaw: Marker3D = %Yaw
 
-const LOCOMOTIVE := preload("uid://beccy6mjldaql")
-const STORAGE := preload("uid://hs0dfepm6mob")
+const LOCOMOTIVE := preload("res://assets/scenes/locomotive.tscn")
+const STORAGE := preload("res://assets/scenes/storage_wagon.tscn")
+signal spawn_ended()
 
 var wagons: Array[Wagon]
 
@@ -47,35 +48,39 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	var _mouse_input := (
-			event is InputEventMouseMotion
-			and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
-	)
-	
-	if _mouse_input:
-		_roll = event.relative.x * 0.5
-		_pitch = event.relative.y * 0.5
+	if Global.window_is_open == false:
+		var _mouse_input := (
+				event is InputEventMouseMotion
+				and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
+		)
+		
+		if _mouse_input:
+			_roll = event.relative.x * 0.5
+			_pitch = event.relative.y * 0.5
 
 
 func _process(delta: float) -> void:
+	if Global.pause == true:
+		return
 	var f := true
 	
-	if Input.is_action_just_pressed("gear_up"):
-		_gear = minf(_gear + 1, 2)
-		_target = _gear
-		_target = -1.0 if _gear == -1 else _gear * 0.75
-		_stop = false
-		_started = true
-	if Input.is_action_just_pressed("gear_down"):
-		_gear = maxf(_gear - 1, -1)
-		_target = -1.0 if _gear == -1 else _gear * 0.5
-		_stop = false
-	
-	if Input.is_action_just_pressed("left"):
-		_track = 0
-	if Input.is_action_just_pressed("right"):
-		_track = 1
-	
+	if Global.window_is_open == false:
+		if Input.is_action_just_pressed("gear_up"):
+			_gear = minf(_gear + 1, 2)
+			_target = _gear
+			_target = -1.0 if _gear == -1 else _gear * 0.75
+			_stop = false
+			_started = true
+		if Input.is_action_just_pressed("gear_down"):
+			_gear = maxf(_gear - 1, -1)
+			_target = -1.0 if _gear == -1 else _gear * 0.5
+			_stop = false
+		
+		if Input.is_action_just_pressed("left"):
+			_track = 0
+		if Input.is_action_just_pressed("right"):
+			_track = 1
+		
 	_speed = move_toward(_speed, _target, delta * 0.2)
 	
 	var t := _track
@@ -142,8 +147,8 @@ func _process(delta: float) -> void:
 func _render_section(s: TrackSection):
 	var p := s.curve.get_baked_points()
 	
-	for i in range(p.size() - 1):
-		DebugDraw3D.draw_line(p[i], p[i + 1], Color.ORANGE)
+	#for i in range(p.size() - 1):
+		#DebugDraw3D.draw_line(p[i], p[i + 1], Color.ORANGE)
 
 
 func spawn(station: TrackStop, reverse := false):
@@ -152,6 +157,7 @@ func spawn(station: TrackStop, reverse := false):
 	for i in range(wagons.size()):
 		wagons[i].spawn(station, reverse, 0.2 + accum)
 		accum += wagons[i].length + 0.05 # clearance
+	spawn_ended.emit()
 
 
 func _update_rotation():

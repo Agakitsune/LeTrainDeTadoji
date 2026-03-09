@@ -5,94 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://d4i10yw1pjafm" path="res://assets/textures/location.png" id="2_w4djk"]
 [ext_resource type="PackedScene" uid="uid://doatrruajn1cu" path="res://assets/scenes/train_ressources.tscn" id="2_yyx54"]
 [ext_resource type="Texture2D" uid="uid://d1tbfbrto0grv" path="res://assets/textures/chrono.png" id="3_xobuw"]
+[ext_resource type="Theme" uid="uid://bi6i6ndsmi6e1" path="res://assets/themes/new_theme.tres" id="4_frwrm"]
 [ext_resource type="Texture2D" uid="uid://tlus1td6u7dw" path="res://assets/textures/quit.png" id="4_xobuw"]
 [ext_resource type="PackedScene" uid="uid://bgku8muulqqb1" path="res://assets/scenes/hud_contract.tscn" id="6_ap4hf"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pslky"]
-bg_color = Color(0.23921569, 0.76862746, 0.8117647, 1)
-border_width_bottom = 5
-border_color = Color(0.14509805, 0.5372549, 0.57254905, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2xg2"]
-bg_color = Color(0.09411765, 0.50980395, 0.52156866, 1)
-border_width_bottom = 5
-border_color = Color(0.045545578, 0.31796953, 0.32746062, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayc1w"]
-bg_color = Color(0.23921569, 0.76862746, 0.8117647, 1)
-border_width_bottom = 5
-border_color = Color(0.14341465, 0.53786683, 0.57123953, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_33tm4"]
-bg_color = Color(0.081192516, 0.45620364, 0.4692453, 1)
-border_width_bottom = 5
-border_color = Color(0.047058824, 0.31764707, 0.32941177, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_msta7"]
-bg_color = Color(0.09411765, 0.50980395, 0.52156866, 1)
-border_color = Color(0.047058824, 0.31764707, 0.32941177, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ug87e"]
-bg_color = Color(0.09411765, 0.50980395, 0.52156866, 1)
-border_width_bottom = 5
-border_color = Color(0.045545578, 0.31796953, 0.32746062, 1)
-corner_radius_top_right = 5
-corner_radius_bottom_left = 5
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phl04"]
-bg_color = Color(0.09399345, 0.5079463, 0.5223276, 1)
-border_width_bottom = 5
-border_color = Color(0.045545578, 0.31796953, 0.32746062, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="Theme" id="Theme_pslky"]
-Button/colors/font_color = Color(0.07983764, 0.17769217, 0.17818457, 1)
-Button/styles/hover = SubResource("StyleBoxFlat_pslky")
-Button/styles/hover_pressed = SubResource("StyleBoxFlat_a2xg2")
-Button/styles/normal = SubResource("StyleBoxFlat_ayc1w")
-Button/styles/pressed = SubResource("StyleBoxFlat_33tm4")
-CheckBox/styles/hover = SubResource("StyleBoxFlat_msta7")
-CheckBox/styles/hover_pressed = SubResource("StyleBoxFlat_ug87e")
-CheckBox/styles/pressed = SubResource("StyleBoxFlat_phl04")
-Label/colors/font_color = Color(0.039215688, 0.25882354, 0.25882354, 1)
-Panel/styles/panel = ExtResource("2_3lwha")
+[ext_resource type="PackedScene" uid="uid://c1qm8miwof6si" path="res://assets/scenes/pause_menu.tscn" id="9_x7rip"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xobuw"]
 bg_color = Color(0.44255129, 0.79120517, 0.7752436, 1)
@@ -176,12 +92,14 @@ grow_vertical = 2
 script = ExtResource("1_ayc1w")
 
 [node name="TrainRessources" parent="." unique_id=243742770 instance=ExtResource("2_yyx54")]
+visible = false
 layout_mode = 1
 
 [node name="HudContract" parent="." unique_id=51151499 instance=ExtResource("6_ap4hf")]
 layout_mode = 1
 
 [node name="Panel" type="Panel" parent="." unique_id=95024020]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -194,7 +112,7 @@ offset_right = 305.5
 offset_bottom = 183.625
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_pslky")
+theme = ExtResource("4_frwrm")
 theme_override_styles/panel = ExtResource("2_3lwha")
 
 [node name="Label" type="Label" parent="Panel" unique_id=1760650071]
@@ -348,6 +266,21 @@ offset_bottom = 34.0
 theme_override_colors/font_color = Color(0.036154907, 0.64281803, 0, 1)
 theme_override_font_sizes/font_size = 20
 text = "jkhjk"
+
+[node name="Penalty" type="Label" parent="Panel2" unique_id=720962079]
+visible = false
+layout_mode = 0
+offset_left = 15.0
+offset_top = 34.0
+offset_right = 94.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0.92629945, 2.7193873e-06, 3.85046e-07, 1)
+theme_override_font_sizes/font_size = 20
+text = "az"
+
+[node name="PauseMenu" parent="." unique_id=1141324182 instance=ExtResource("9_x7rip")]
+visible = false
+layout_mode = 1
 
 [connection signal="pressed" from="Panel/Panel/AcceptButton" to="." method="_on_accept_button_pressed"]
 [connection signal="pressed" from="Panel/CloseButton" to="." method="_on_close_button_pressed"]

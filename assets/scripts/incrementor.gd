@@ -3,7 +3,7 @@ extends Control
 
 var value = 0
 var increment = 1
-var array_index = 0
+var array_index = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,6 +12,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	label.text = str(value)
+	value = Global.current_ressources[array_index]
 
 func _on_less_pressed() -> void:
 	var current_value = Global.get_total_ressources()

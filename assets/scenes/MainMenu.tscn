@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://cvq67kcdumqwi"]
 
+[ext_resource type="Script" uid="uid://d3v4o7amskemg" path="res://assets/scripts/main_menu.gd" id="1_t6dbj"]
+[ext_resource type="Theme" uid="uid://bi6i6ndsmi6e1" path="res://assets/themes/new_theme.tres" id="2_u804d"]
+
 [node name="MainMenu" type="Control" unique_id=1781741494]
 layout_mode = 3
 anchors_preset = 15
@@ -7,11 +10,30 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_t6dbj")
 
 [node name="Button" type="Button" parent="." unique_id=1407990861]
 layout_mode = 0
-offset_left = 132.0
-offset_top = 411.0
-offset_right = 370.0
-offset_bottom = 475.0
+offset_left = 118.0
+offset_top = 376.0
+offset_right = 356.0
+offset_bottom = 440.0
+theme = ExtResource("2_u804d")
 theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 30
+text = "Play"
+
+[node name="Quit" type="Button" parent="." unique_id=658094839]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 461.0
+offset_right = 358.0
+offset_bottom = 525.0
+theme = ExtResource("2_u804d")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 30
+text = "Quit
+"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
