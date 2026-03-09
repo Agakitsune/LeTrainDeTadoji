@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://c1qm8miwof6si"]
+
+[ext_resource type="Script" uid="uid://bv7a1nm6st3hp" path="res://assets/scripts/pause_menu.gd" id="1_uo1om"]
+[ext_resource type="Theme" uid="uid://bi6i6ndsmi6e1" path="res://assets/themes/new_theme.tres" id="2_yf6nb"]
+
+[node name="PauseMenu" type="Control" unique_id=1141324182]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uo1om")
+
+[node name="Panel" type="Panel" parent="." unique_id=1159517076]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="Panel" unique_id=5165343]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -114.0
+offset_top = -52.0
+offset_right = 124.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_yf6nb")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 30
+text = "Resume"
+
+[node name="Quit" type="Button" parent="Panel" unique_id=1008448290]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -114.0
+offset_top = 63.0
+offset_right = 124.0
+offset_bottom = 127.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_yf6nb")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 30
+text = "Quit
+"
+
+[node name="Label" type="Label" parent="Panel" unique_id=1856415350]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 28.0
+offset_right = 699.0
+offset_bottom = 138.0
+theme_override_font_sizes/font_size = 80
+text = "Pause"
+
+[connection signal="pressed" from="Panel/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Panel/Quit" to="." method="_on_quit_pressed"]

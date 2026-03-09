@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://blnoaph5pjs1s"]
 
 [ext_resource type="Script" uid="uid://c4on3wci5whds" path="res://world.gd" id="1_f3sb7"]
+[ext_resource type="PackedScene" uid="uid://cgbejatwp21bv" path="res://assets/scenes/control.tscn" id="2_036b0"]
 [ext_resource type="Script" uid="uid://b0dw035xv0lvc" path="res://assets/scripts/train/track_path.gd" id="2_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://cggkwi1vylao8" path="res://assets/scenes/player.tscn" id="4_aqk2v"]
 [ext_resource type="Script" uid="uid://bkx45ocdr0tqd" path="res://assets/scripts/nodes/track_stop.gd" id="5_036b0"]
@@ -160,3 +161,5 @@ stop_name = "Mak"
 metadata/_custom_type_script = "uid://bkx45ocdr0tqd"
 
 [node name="Player" parent="." unique_id=1635979602 instance=ExtResource("4_aqk2v")]
+
+[node name="Control" parent="." unique_id=262478583 instance=ExtResource("2_036b0")]

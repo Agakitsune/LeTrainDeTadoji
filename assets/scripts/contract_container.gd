@@ -16,6 +16,8 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func _process(delta: float) -> void:
+	if Global.pause == true:
+		return
 	#var negative = false
 	time_left -= delta
 	if time_left < penalty:

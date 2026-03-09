@@ -9,6 +9,8 @@ extends Node
 @onready var ressources_list: HBoxContainer = $Panel/Panel/Panel2/ScrollContainer/CenterContainer/RessourcesList
 @onready var hud_contract: Control = $HudContract
 @onready var money_label: Label = $Panel2/MoneyLabel
+@onready var train_ressources: Control = $TrainRessources
+@onready var penalty: Label = $Panel2/Penalty
 
 const RESSOURCES_ICON = preload("res://assets/scenes/ressources_icon.tscn")
 const Contract = preload("res://assets/scripts/contract.gd")
@@ -22,14 +24,30 @@ var current_contract
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for _i in range(5):
-		add_easy_contract()
+	Global.interfaces = self
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	money_label.text = str(Global.money) + "$"
 	if Input.is_action_just_pressed("reset"):
 		reset_contracts()
+	if current_contract and current_contract.done == true:
+		hud_contract.del_container
+
+func show_penalty(text) -> void:
+	var copy: Label = penalty.duplicate()
+	copy.text = text
+	copy.visible = true
+	copy.global_position = penalty.global_position
+	copy.modulate.a = 1.0
+	get_tree().current_scene.add_child(copy)
+
+	var tween := create_tween()
+	tween.tween_property(copy, "position:y", copy.position.y + 20, 0.6)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(copy, "modulate:a", 0.0, 0.6)
+	tween.tween_callback(copy.queue_free)
 
 func add_easy_contract():
 	var rng = RandomNumberGenerator.new()
@@ -44,8 +62,14 @@ func add_easy_contract():
 		possible_id.erase(ressources_id)
 		var ressource_quantity = rng.randi_range(30, 70)
 		reward += rng.randi_range(40, 85)
-		new_contract.add_ressource(ressource_quantity, resources_list[ressources_id])
-	new_contract.setup(reward, "Oregon", contract_time)
+		new_contract.add_ressource(int(ressource_quantity / iteration), resources_list[ressources_id])
+	var current_stop = Global.player.wagons[0].bogeys[-1]._section.stop
+	var possible_stops = Graph.stops.duplicate()
+	if Global.player.wagons[0].bogeys[-1]._section.stop:
+		possible_stops.erase(Global.player.wagons[0].bogeys[-1]._section.stop.name)
+
+	var train_stop = possible_stops.keys().pick_random()
+	new_contract.setup(reward, train_stop, contract_time)
 	new_contract_list[contract_id] = new_contract
 	var contract_list_button = Button.new()
 	contract_list_button.toggle_mode = true
@@ -73,6 +97,8 @@ func clear_button_list():
 	button_list.clear()
 
 func on_contract_selected(id):
+	Global.depart_station = Global.player.wagons[0].bogeys[-1]._section.stop.name
+	#hud_contract.disable_contract()
 	deselect_button(id)
 	clear_ressource_list()
 	selected_contract_id = id
@@ -91,6 +117,12 @@ func on_contract_selected(id):
 	location_label.text = new_contract_list[id].get_location()
 	time_label.text = str(new_contract_list[id].get_time())
 
+func choose_contract():
+	reset_contracts()
+	hud_contract.del_container()
+	panel.visible = true
+	hud_contract.visible = false
+
 func reset_contracts():
 	for contract in contract_list.get_children():
 		contract.queue_free()
@@ -107,6 +139,9 @@ func _on_accept_button_pressed() -> void:
 			button.queue_free()
 			select_contract_panel.visible = false
 			panel.visible = false
+			train_ressources.visible = true
 
 func _on_close_button_pressed() -> void:
+	Global.window_is_open = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	panel.visible = false

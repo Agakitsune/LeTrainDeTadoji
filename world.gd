@@ -6,16 +6,18 @@ var t := 0
 
 func _ready() -> void:
 	var paths: Array[TrackPath]
-	
+	Global.player = player
 	for i in get_children():
 		if i is TrackPath:
 			paths.append(i)
 	
 	Graph.connect_paths(paths)
 	player.spawn.call_deferred(Graph.stops["Mak"], true)
-	
+	player.spawn_ended.connect(init_contract)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
+func init_contract():
+	Global.interfaces.add_easy_contract()
 
 func _process(delta: float) -> void:
 	pass
@@ -35,9 +37,8 @@ func _process(delta: float) -> void:
 	#
 	#train_wagon.advance(delta, t)
 
-
 func _render_section(a: TrackSection):
 	var p := a.curve.get_baked_points()
 	
-	for i in range(p.size() - 1):
-		DebugDraw3D.draw_line(p[i], p[i + 1], Color.ORANGE)
+	#for i in range(p.size() - 1):
+		#DebugDraw3D.draw_line(p[i], p[i + 1], Color.ORANGE)
