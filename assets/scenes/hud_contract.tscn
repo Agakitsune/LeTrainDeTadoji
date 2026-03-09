@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://bgku8muulqqb1"]
+
+[ext_resource type="Script" uid="uid://c7tjsvbai4foa" path="res://assets/scripts/hud_contract.gd" id="1_py7w5"]
+[ext_resource type="Theme" uid="uid://bi6i6ndsmi6e1" path="res://assets/themes/new_theme.tres" id="2_ba501"]
+
+[node name="HudContract" type="Control" unique_id=51151499]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_py7w5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=136970952]
+layout_mode = 0
+offset_left = 749.0
+offset_top = 38.0
+offset_right = 1042.0
+offset_bottom = 221.0
+mouse_filter = 2
+theme_override_constants/separation = 200
+alignment = 1
+
+[node name="ButtonContract" type="Button" parent="." unique_id=1316700355]
+layout_mode = 0
+offset_left = 966.0
+offset_top = 504.0
+offset_right = 1120.0
+offset_bottom = 545.0
+theme = ExtResource("2_ba501")
+text = "Contract"
+
+[node name="ButtonRessource" type="Button" parent="." unique_id=1844056749]
+layout_mode = 0
+offset_left = 966.0
+offset_top = 441.0
+offset_right = 1119.0
+offset_bottom = 484.0
+theme = ExtResource("2_ba501")
+text = "Ressources"
+
+[connection signal="pressed" from="ButtonContract" to="." method="_on_button_contract_pressed"]
+[connection signal="pressed" from="ButtonRessource" to="." method="_on_button_ressource_pressed"]

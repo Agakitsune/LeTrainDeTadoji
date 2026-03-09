@@ -1,0 +1,286 @@
+[gd_scene format=3 uid="uid://cgbejatwp21bv"]
+
+[ext_resource type="Script" uid="uid://dnvwagvdoj0gn" path="res://assets/scripts/contract_manager.gd" id="1_ayc1w"]
+[ext_resource type="StyleBox" uid="uid://crl7vd878rum5" path="res://assets/themes/new_style_box_flat.tres" id="2_3lwha"]
+[ext_resource type="Texture2D" uid="uid://d4i10yw1pjafm" path="res://assets/textures/location.png" id="2_w4djk"]
+[ext_resource type="PackedScene" uid="uid://doatrruajn1cu" path="res://assets/scenes/train_ressources.tscn" id="2_yyx54"]
+[ext_resource type="Texture2D" uid="uid://d1tbfbrto0grv" path="res://assets/textures/chrono.png" id="3_xobuw"]
+[ext_resource type="Theme" uid="uid://bi6i6ndsmi6e1" path="res://assets/themes/new_theme.tres" id="4_frwrm"]
+[ext_resource type="Texture2D" uid="uid://tlus1td6u7dw" path="res://assets/textures/quit.png" id="4_xobuw"]
+[ext_resource type="PackedScene" uid="uid://bgku8muulqqb1" path="res://assets/scenes/hud_contract.tscn" id="6_ap4hf"]
+[ext_resource type="PackedScene" uid="uid://c1qm8miwof6si" path="res://assets/scenes/pause_menu.tscn" id="9_x7rip"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xobuw"]
+bg_color = Color(0.44255129, 0.79120517, 0.7752436, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.037503038, 0.25732514, 0.2581188, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ap4hf"]
+bg_color = Color(0.5921569, 0.8901961, 0.8745098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.037503038, 0.25732514, 0.2581188, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3lwha"]
+bg_color = Color(0.65568423, 0.91399467, 0.8999842, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.037503038, 0.25732514, 0.2581188, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yyx54"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_frwrm"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x7rip"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="Control" type="Control" unique_id=262478583]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ayc1w")
+
+[node name="TrainRessources" parent="." unique_id=243742770 instance=ExtResource("2_yyx54")]
+visible = false
+layout_mode = 1
+
+[node name="HudContract" parent="." unique_id=51151499 instance=ExtResource("6_ap4hf")]
+layout_mode = 1
+
+[node name="Panel" type="Panel" parent="." unique_id=95024020]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -305.5
+offset_top = -210.0
+offset_right = 305.5
+offset_bottom = 183.625
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_frwrm")
+theme_override_styles/panel = ExtResource("2_3lwha")
+
+[node name="Label" type="Label" parent="Panel" unique_id=1760650071]
+layout_mode = 0
+offset_left = 27.5
+offset_top = 12.0
+offset_right = 174.5
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 29
+text = "Contract"
+
+[node name="ContractList" type="VBoxContainer" parent="Panel" unique_id=684331414]
+layout_mode = 0
+offset_left = 36.5
+offset_top = 82.0
+offset_right = 178.0
+offset_bottom = 317.625
+theme_override_constants/separation = 30
+
+[node name="Panel" type="Panel" parent="Panel" unique_id=1458657863]
+visible = false
+layout_mode = 0
+offset_left = 244.5
+offset_top = 81.0
+offset_right = 571.5
+offset_bottom = 344.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xobuw")
+
+[node name="Label" type="Label" parent="Panel/Panel" unique_id=1924235647]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -131.5
+offset_top = 217.0
+offset_right = -64.5
+offset_bottom = 242.0
+grow_horizontal = 2
+text = "Reward:"
+
+[node name="RewardLabel" type="Label" parent="Panel/Panel" unique_id=305773715]
+layout_mode = 0
+offset_left = 106.0
+offset_top = 217.0
+offset_right = 143.0
+offset_bottom = 240.0
+
+[node name="AcceptButton" type="Button" parent="Panel/Panel" unique_id=154388102]
+layout_mode = 0
+offset_left = 205.0
+offset_top = 214.0
+offset_right = 297.0
+offset_bottom = 245.0
+text = "Accept"
+
+[node name="Panel2" type="Panel" parent="Panel/Panel" unique_id=1975055339]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 24.0
+offset_right = 316.0
+offset_bottom = 147.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ap4hf")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Panel/Panel2" unique_id=558556623]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -134.0
+offset_top = -51.5
+offset_right = 134.0
+offset_bottom = 51.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel/Panel/Panel2/ScrollContainer" unique_id=1270112164]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RessourcesList" type="HBoxContainer" parent="Panel/Panel/Panel2/ScrollContainer/CenterContainer" unique_id=1086326405]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 40
+
+[node name="Panel" type="Panel" parent="Panel/Panel" unique_id=741329753]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 162.0
+offset_right = 310.0
+offset_bottom = 202.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3lwha")
+
+[node name="LocationLabel" type="Label" parent="Panel/Panel/Panel" unique_id=974809884]
+layout_mode = 0
+offset_left = 53.25
+offset_top = 11.4375
+offset_right = 142.25
+offset_bottom = 29.4375
+theme_override_font_sizes/font_size = 13
+
+[node name="LocationIcon" type="Sprite2D" parent="Panel/Panel/Panel" unique_id=608212794]
+position = Vector2(36.25, 20.437513)
+scale = Vector2(0.05175778, 0.04956048)
+texture = ExtResource("2_w4djk")
+
+[node name="TimeLabel" type="Label" parent="Panel/Panel/Panel" unique_id=1559059802]
+layout_mode = 0
+offset_left = 191.25
+offset_top = 11.4375
+offset_right = 282.02527
+offset_bottom = 29.4375
+scale = Vector2(1.0245075, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="TimeIcon" type="Sprite2D" parent="Panel/Panel/Panel" unique_id=199709055]
+position = Vector2(164.25003, 20.437492)
+scale = Vector2(0.06298834, 0.060302705)
+texture = ExtResource("3_xobuw")
+
+[node name="CloseButton" type="Button" parent="Panel" unique_id=1099760877]
+visible = false
+layout_mode = 0
+offset_left = 565.5
+offset_top = -16.0
+offset_right = 1085.5
+offset_bottom = 504.0
+scale = Vector2(0.1, 0.1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_yyx54")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_frwrm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_x7rip")
+icon = ExtResource("4_xobuw")
+
+[node name="Panel2" type="Panel" parent="." unique_id=1544082732]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 31.0
+offset_right = 171.0
+offset_bottom = 71.0
+theme_override_styles/panel = ExtResource("2_3lwha")
+
+[node name="MoneyLabel" type="Label" parent="Panel2" unique_id=556183523]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 6.0
+offset_right = 99.0
+offset_bottom = 34.0
+theme_override_colors/font_color = Color(0.036154907, 0.64281803, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "jkhjk"
+
+[node name="Penalty" type="Label" parent="Panel2" unique_id=720962079]
+visible = false
+layout_mode = 0
+offset_left = 15.0
+offset_top = 34.0
+offset_right = 94.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0.92629945, 2.7193873e-06, 3.85046e-07, 1)
+theme_override_font_sizes/font_size = 20
+text = "az"
+
+[node name="PauseMenu" parent="." unique_id=1141324182 instance=ExtResource("9_x7rip")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="Panel/Panel/AcceptButton" to="." method="_on_accept_button_pressed"]
+[connection signal="pressed" from="Panel/CloseButton" to="." method="_on_close_button_pressed"]

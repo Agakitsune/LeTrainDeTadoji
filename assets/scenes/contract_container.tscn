@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://k7n6xt1tbpc6"]
+
+[ext_resource type="Script" uid="uid://b834m7iet8mrn" path="res://assets/scripts/contract_container.gd" id="1_v0q3d"]
+[ext_resource type="Texture2D" uid="uid://d4i10yw1pjafm" path="res://assets/textures/location.png" id="3_wn4ve"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cultf"]
+bg_color = Color(0.38223457, 0.72678494, 0.7114286, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.037503038, 0.25732514, 0.2581188, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tr0tu"]
+bg_color = Color(0.5921569, 0.8901961, 0.8745098, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.037503038, 0.25732514, 0.2581188, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0q3d"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+shadow_color = Color(0, 0, 0, 0.54901963)
+
+[node name="ContractContainer" type="Control" unique_id=468196182]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -156.0
+offset_top = -59.0
+offset_right = -983.0
+offset_bottom = -532.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v0q3d")
+
+[node name="Panel2" type="Panel" parent="." unique_id=1638024053]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 1.0
+offset_right = 323.0
+offset_bottom = 174.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_cultf")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel2" unique_id=442248210]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 104.0
+offset_right = 315.0
+offset_bottom = 166.0
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel2/ScrollContainer" unique_id=1265128693]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel2/ScrollContainer/CenterContainer" unique_id=1916308437]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Panel" type="Panel" parent="." unique_id=942149064]
+layout_mode = 0
+offset_right = 323.0
+offset_bottom = 103.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tr0tu")
+
+[node name="Penalty" type="Label" parent="Panel" unique_id=857085842]
+layout_mode = 0
+offset_left = 205.0
+offset_top = 3.0
+offset_right = 268.0
+offset_bottom = 27.0
+theme_override_colors/font_color = Color(0.89827543, 2.5990605e-06, 1.2513996e-06, 1)
+theme_override_font_sizes/font_size = 20
+
+[node name="ContractName" type="Label" parent="Panel" unique_id=1167752864]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 150.0
+offset_bottom = 53.0
+theme_override_colors/font_color = Color(0.078431375, 0.1764706, 0.1764706, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_v0q3d")
+text = "Contract 1"
+
+[node name="DestinationName" type="Label" parent="Panel" unique_id=1656956467]
+layout_mode = 0
+offset_left = 51.0
+offset_top = 57.0
+offset_right = 147.0
+offset_bottom = 84.0
+theme_override_colors/font_color = Color(0.93162966, 0.7419279, 0, 1)
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = SubResource("StyleBoxFlat_v0q3d")
+text = "Dest"
+
+[node name="TimeLeft" type="Label" parent="Panel" unique_id=1224777684]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 18.0
+offset_right = 296.0
+offset_bottom = 53.0
+theme_override_colors/font_color = Color(0.078431375, 0.1764706, 0.1764706, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_v0q3d")
+text = "ze"
+
+[node name="Reward" type="Label" parent="Panel" unique_id=67171729]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 55.0
+offset_right = 296.0
+offset_bottom = 90.0
+theme_override_colors/font_color = Color(0.11372549, 0.80784315, 0.25882354, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_v0q3d")
+text = "ze"
+
+[node name="Sprite2D" type="Sprite2D" parent="Panel" unique_id=130491869]
+position = Vector2(36.000004, 70)
+scale = Vector2(0.05810546, 0.056152347)
+texture = ExtResource("3_wn4ve")

@@ -1,0 +1,165 @@
+[gd_scene format=3 uid="uid://blnoaph5pjs1s"]
+
+[ext_resource type="Script" uid="uid://c4on3wci5whds" path="res://world.gd" id="1_f3sb7"]
+[ext_resource type="PackedScene" uid="uid://cgbejatwp21bv" path="res://assets/scenes/control.tscn" id="2_036b0"]
+[ext_resource type="Script" uid="uid://b0dw035xv0lvc" path="res://assets/scripts/train/track_path.gd" id="2_fj7yv"]
+[ext_resource type="PackedScene" uid="uid://cggkwi1vylao8" path="res://assets/scenes/player.tscn" id="4_aqk2v"]
+[ext_resource type="Script" uid="uid://bkx45ocdr0tqd" path="res://assets/scripts/nodes/track_stop.gd" id="5_036b0"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f3sb7"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_fj7yv"]
+sky_material = SubResource("ProceduralSkyMaterial_f3sb7")
+
+[sub_resource type="Environment" id="Environment_tlwt5"]
+background_mode = 2
+sky = SubResource("Sky_fj7yv")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Curve3D" id="Curve3D_tlwt5"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -1, 0, -8, 0, 0, 0, 0, 0, 0, -1, 0, -6),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+up_vector_enabled = false
+
+[sub_resource type="Curve3D" id="Curve3D_aqk2v"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 2, -1, 0, -6, 0, 0, -2, 0, 0, 0, 0, 0, -2),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+up_vector_enabled = false
+
+[sub_resource type="Curve3D" id="Curve3D_fj7yv"]
+_data = {
+"points": PackedVector3Array(0, 0, -1, 0, 0, 1, 0, 0, -2, 1, 0, 0, -1, 0, 0, -2, 0, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+up_vector_enabled = false
+
+[sub_resource type="Curve3D" id="Curve3D_pkg7o"]
+_data = {
+"points": PackedVector3Array(0, 0, -1, 0, 0, 1, 0, 0, -2, -1, 0, 0, 1, 0, 0, 2, 0, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+up_vector_enabled = false
+
+[sub_resource type="Curve3D" id="Curve3D_wse8f"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+up_vector_enabled = false
+
+[sub_resource type="Curve3D" id="Curve3D_gbfbk"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 2, 0, 0, 2, 0, 0, -2, 0, 0, 0, 0, 0, 8, 1, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+up_vector_enabled = false
+
+[sub_resource type="Curve3D" id="Curve3D_ioo17"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 8, 1, 0, 0, 0, 0, 0, 0, 0, 11, 1, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+up_vector_enabled = false
+
+[sub_resource type="Curve3D" id="Curve3D_036b0"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -2, 0, 0, 0, 0, 0, 0, 0, 0, -4, 0, 0, 0, 0, 0, 0, 0, 0, -8, 0, 0),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+up_vector_enabled = false
+
+[sub_resource type="Curve3D" id="Curve3D_dwbse"]
+_data = {
+"points": PackedVector3Array(1, 0, 0, -1, 0, 0, -4, 0, 0, 2, 0, -2, -2, 0, 2, -8, 0, 2),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+up_vector_enabled = false
+
+[node name="World" type="Node3D" unique_id=1228652752]
+script = ExtResource("1_f3sb7")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1930267924]
+environment = SubResource("Environment_tlwt5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1598672439]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="TrackSection" type="Path3D" parent="." unique_id=666827441 node_paths=PackedStringArray("stop")]
+curve = SubResource("Curve3D_tlwt5")
+script = ExtResource("2_fj7yv")
+stop = NodePath("../Tadoji")
+metadata/_custom_type_script = "uid://b0dw035xv0lvc"
+
+[node name="TrackSection2" type="Path3D" parent="." unique_id=820745643]
+curve = SubResource("Curve3D_aqk2v")
+script = ExtResource("2_fj7yv")
+metadata/_custom_type_script = "uid://b0dw035xv0lvc"
+
+[node name="TrackSection3" type="Path3D" parent="." unique_id=1978577409]
+curve = SubResource("Curve3D_fj7yv")
+script = ExtResource("2_fj7yv")
+metadata/_custom_type_script = "uid://b0dw035xv0lvc"
+
+[node name="TrackSection6" type="Path3D" parent="." unique_id=1630847611]
+curve = SubResource("Curve3D_pkg7o")
+script = ExtResource("2_fj7yv")
+metadata/_custom_type_script = "uid://b0dw035xv0lvc"
+
+[node name="TrackSection9" type="Path3D" parent="." unique_id=1166356141]
+curve = SubResource("Curve3D_wse8f")
+script = ExtResource("2_fj7yv")
+metadata/_custom_type_script = "uid://b0dw035xv0lvc"
+
+[node name="TrackSection7" type="Path3D" parent="." unique_id=1395182570]
+curve = SubResource("Curve3D_gbfbk")
+script = ExtResource("2_fj7yv")
+metadata/_custom_type_script = "uid://b0dw035xv0lvc"
+
+[node name="TrackSection8" type="Path3D" parent="." unique_id=80396715 node_paths=PackedStringArray("stop")]
+curve = SubResource("Curve3D_ioo17")
+script = ExtResource("2_fj7yv")
+stop = NodePath("../Mak")
+metadata/_custom_type_script = "uid://b0dw035xv0lvc"
+
+[node name="TrackSection4" type="Path3D" parent="." unique_id=368711707]
+curve = SubResource("Curve3D_036b0")
+script = ExtResource("2_fj7yv")
+metadata/_custom_type_script = "uid://b0dw035xv0lvc"
+
+[node name="TrackSection5" type="Path3D" parent="." unique_id=1827783516]
+curve = SubResource("Curve3D_dwbse")
+script = ExtResource("2_fj7yv")
+metadata/_custom_type_script = "uid://b0dw035xv0lvc"
+
+[node name="Tadoji" type="Marker3D" parent="." unique_id=1363064627]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -7)
+script = ExtResource("5_036b0")
+stop_name = "Tadoji"
+metadata/_custom_type_script = "uid://bkx45ocdr0tqd"
+
+[node name="Mak" type="Marker3D" parent="." unique_id=372673266]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -1)
+script = ExtResource("5_036b0")
+stop_name = "Mak"
+metadata/_custom_type_script = "uid://bkx45ocdr0tqd"
+
+[node name="Player" parent="." unique_id=1635979602 instance=ExtResource("4_aqk2v")]
+
+[node name="Control" parent="." unique_id=262478583 instance=ExtResource("2_036b0")]

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://rma8egfmiyj"]
+
+[ext_resource type="Script" uid="uid://bi4tq4rgjk4xk" path="res://assets/scripts/contract.gd" id="1_5tefe"]
+
+[node name="Contract" type="Control" unique_id=1953273600]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5tefe")
