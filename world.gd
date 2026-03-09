@@ -1,7 +1,6 @@
 extends Node3D
 
-@onready var marker_3d: Marker3D = $Marker3D
-@onready var train_wagon: TrainWagon = $TrainWagon
+@onready var player: Player = $Player
 
 var t := 0
 
@@ -13,28 +12,28 @@ func _ready() -> void:
 			paths.append(i)
 	
 	Graph.connect_paths(paths)
-	train_wagon.spawn(Graph.stops["Mak"].section, true, true)
+	player.spawn.call_deferred(Graph.stops["Mak"], true)
 	
-	for i in Graph.stops:
-		print("Found stop: ", Graph.stops[i].name)
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _process(delta: float) -> void:
-	_render_section(train_wagon._section)
-	
-	match train_wagon._next_track.size():
-		1:
-			_render_section(train_wagon._next_track[0])
-			t =0
-		2:
-			_render_section(train_wagon._next_track[t])
-	
-			if Input.is_action_just_pressed("ui_left"):
-				t = 0
-			if Input.is_action_just_pressed("ui_right"):
-				t = 1
-	
-	train_wagon.advance(delta, t)
+	pass
+	#_render_section(train_wagon._section)
+	#
+	#match train_wagon._next_track.size():
+		#1:
+			#_render_section(train_wagon._next_track[0])
+			#t =0
+		#2:
+			#_render_section(train_wagon._next_track[t])
+	#
+			#if Input.is_action_just_pressed("ui_left"):
+				#t = 0
+			#if Input.is_action_just_pressed("ui_right"):
+				#t = 1
+	#
+	#train_wagon.advance(delta, t)
 
 
 func _render_section(a: TrackSection):

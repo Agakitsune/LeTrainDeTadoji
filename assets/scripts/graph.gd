@@ -36,7 +36,7 @@ func _generate_section(p: TrackPath) -> TrackSection:
 			p.curve.get_point_out(i + 1)
 		)
 		sec.curve.up_vector_enabled = false
-		sec.curve.bake_interval = 1.0
+		sec.curve.bake_interval = 0.1
 		sec.start = s
 		sec.end = TrackAnchor.new()
 		

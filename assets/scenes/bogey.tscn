@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dxv5ih7o4q22f"]
+
+[ext_resource type="Script" uid="uid://diqpcwrlohjqb" path="res://assets/scripts/train/train.gd" id="1_so2n7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_so2n7"]
+albedo_color = Color(1, 0.39607844, 1, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_h7ahm"]
+material = SubResource("StandardMaterial3D_so2n7")
+size = Vector3(0.2, 0.2, 0)
+
+[node name="Bogey" type="Marker3D" unique_id=1053342352]
+script = ExtResource("1_so2n7")
+metadata/_custom_type_script = "uid://diqpcwrlohjqb"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2053508610]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.13116854, -5.733559e-09)
+mesh = SubResource("PrismMesh_h7ahm")
