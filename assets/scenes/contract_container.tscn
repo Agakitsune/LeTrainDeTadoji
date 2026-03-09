@@ -76,6 +76,15 @@ offset_right = 323.0
 offset_bottom = 103.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_tr0tu")
 
+[node name="Penalty" type="Label" parent="Panel" unique_id=857085842]
+layout_mode = 0
+offset_left = 205.0
+offset_top = 3.0
+offset_right = 268.0
+offset_bottom = 27.0
+theme_override_colors/font_color = Color(0.89827543, 2.5990605e-06, 1.2513996e-06, 1)
+theme_override_font_sizes/font_size = 20
+
 [node name="ContractName" type="Label" parent="Panel" unique_id=1167752864]
 layout_mode = 0
 offset_left = 20.0

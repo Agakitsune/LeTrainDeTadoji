@@ -22,6 +22,9 @@ func setup(reward: int, location: String, contract_time : int):
 func get_reward():
 	return _reward
 
+func set_reward(reward):
+	_reward = reward
+
 func get_location():
 	return _location
 

@@ -8,15 +8,17 @@ extends Node
 @onready var time_label: Label = $Panel/Panel/Panel/TimeLabel
 @onready var ressources_list: HBoxContainer = $Panel/Panel/Panel2/ScrollContainer/CenterContainer/RessourcesList
 @onready var hud_contract: Control = $HudContract
+@onready var money_label: Label = $Panel2/MoneyLabel
 
 const RESSOURCES_ICON = preload("res://assets/scenes/ressources_icon.tscn")
 const Contract = preload("res://assets/scripts/contract.gd")
 
-var resources_list = ["Charcoal", "Wood", "Wheat", "Food"]
+var resources_list = ["Charcoal", "Wood", "Wheat", "Rocks"]
 var button_list = []
 var selected_contract_id = -1
 var contract_id = 1
 var new_contract_list = {}
+var current_contract
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,6 +27,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	money_label.text = str(Global.money) + "$"
 	if Input.is_action_just_pressed("reset"):
 		reset_contracts()
 
@@ -82,7 +85,7 @@ func on_contract_selected(id):
 		var new_ressources = RESSOURCES_ICON.instantiate()
 		container.add_child(new_ressources)
 		new_ressources.scale = Vector2(0.7, 0.7)
-		new_ressources.setup("res://icon.svg", new_contract_list[id].ressources[ressource_key])
+		new_ressources.setup(Global.resources_texture[ressource_key], new_contract_list[id].ressources[ressource_key])
 	select_contract_panel.visible = true
 	reward_label.text = str(new_contract_list[id].get_reward())
 	location_label.text = new_contract_list[id].get_location()
@@ -98,11 +101,12 @@ func reset_contracts():
 func _on_accept_button_pressed() -> void:
 	for button in button_list:
 		if button.text == "Contract " + str(selected_contract_id):
-			var added_contract = new_contract_list[selected_contract_id]
-			hud_contract.add_container(added_contract)
+			current_contract = new_contract_list[selected_contract_id]
+			hud_contract.add_container(current_contract)
 			button_list.erase(button)
 			button.queue_free()
 			select_contract_panel.visible = false
+			panel.visible = false
 
 func _on_close_button_pressed() -> void:
 	panel.visible = false
